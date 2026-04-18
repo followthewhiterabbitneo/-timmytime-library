@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "TimmyTime",
+    "slug": "timmytime-library",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.timmytime.app",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "TimmyTime tracks your distance from items you've left behind so it can remind you to go back.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "TimmyTime needs background location to alert you when you've walked away from a tracked item.",
+        "NSCameraUsageDescription": "TimmyTime uses the camera to scan barcodes and photograph items you want to remember.",
+        "UIBackgroundModes": ["location", "audio"]
+      }
+    },
+    "android": {
+      "package": "com.timmytime.app",
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "CAMERA",
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_LOCATION"
+      ]
+    },
+    "plugins": [
+      "expo-location",
+      "expo-camera",
+      "expo-notifications",
+      "expo-barcode-scanner"
+    ]
+  }
+}
