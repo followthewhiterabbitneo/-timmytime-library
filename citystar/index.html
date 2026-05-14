@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>City Star &middot; UWM</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="stage">
+    <svg id="map" aria-label="United States, lit by broker activity"></svg>
+  </div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">&#9733;</span>
+      <span class="wordmark">CITY STAR</span>
+      <span class="beta">UWM</span>
+    </div>
+    <div class="legend" id="legend">tap a light</div>
+  </header>
+
+  <footer class="hint">
+    175M numbers &middot; in-house model &middot; nothing leaves the network
+  </footer>
+
+  <section class="overlay" id="overlay" aria-hidden="true">
+    <button class="close" id="close" aria-label="close">&times;</button>
+    <div class="broker-card" id="broker-card"></div>
+    <div class="team-stage" id="team-stage"></div>
+    <div class="overlay-foot">Tap empty space to dismiss</div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

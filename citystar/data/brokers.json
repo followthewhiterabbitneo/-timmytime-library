@@ -1,0 +1,152 @@
+[
+  {
+    "name": "Marcus Chen",
+    "brokerage": "Summit Lending Group",
+    "city": "Detroit",
+    "state": "MI",
+    "lat": 42.3314,
+    "lng": -83.0458,
+    "nmls": "1842301",
+    "lastTouch": "2 days ago",
+    "ltmVolume": "$48.2M",
+    "volumeIdx": 4,
+    "team": [
+      { "name": "Maria Lopez",  "role": "Sales",        "volume": 412,  "collaborators": 31, "recent": true  },
+      { "name": "Trent Patel",  "role": "Underwriting", "volume": 1289, "collaborators": 64, "recent": false },
+      { "name": "Aisha Brooks", "role": "Welcome",      "volume": 904,  "collaborators": 47, "recent": false },
+      { "name": "Devon Reilly", "role": "Operations",   "volume": 2210, "collaborators": 88, "recent": true  },
+      { "name": "Sam Greco",    "role": "Closing",      "volume": 715,  "collaborators": 39, "recent": false }
+    ]
+  },
+  {
+    "name": "Jasmine Robles",
+    "brokerage": "Coastline Mortgage Partners",
+    "city": "Miami",
+    "state": "FL",
+    "lat": 25.7617,
+    "lng": -80.1918,
+    "nmls": "1903447",
+    "lastTouch": "today",
+    "ltmVolume": "$31.7M",
+    "volumeIdx": 3,
+    "team": [
+      { "name": "Carlos Mendez",  "role": "Sales",        "volume": 538,  "collaborators": 28, "recent": true  },
+      { "name": "Priya Shah",     "role": "Underwriting", "volume": 1071, "collaborators": 52, "recent": true  },
+      { "name": "Liam O'Connor",  "role": "Welcome",      "volume": 612,  "collaborators": 34, "recent": false },
+      { "name": "Nadia Ahmed",    "role": "Operations",   "volume": 1834, "collaborators": 71, "recent": false },
+      { "name": "Bryce Watanabe", "role": "Closing",      "volume": 421,  "collaborators": 22, "recent": false }
+    ]
+  },
+  {
+    "name": "Dale Hutchings",
+    "brokerage": "Lone Star Home Loans",
+    "city": "Dallas",
+    "state": "TX",
+    "lat": 32.7767,
+    "lng": -96.797,
+    "nmls": "1655012",
+    "lastTouch": "8 days ago",
+    "ltmVolume": "$62.4M",
+    "volumeIdx": 5,
+    "team": [
+      { "name": "Maria Lopez",      "role": "Sales",        "volume": 412,  "collaborators": 31, "recent": false },
+      { "name": "Hannah Wilson",    "role": "Underwriting", "volume": 1456, "collaborators": 73, "recent": true  },
+      { "name": "Jordan Pierce",    "role": "Welcome",      "volume": 511,  "collaborators": 29, "recent": false },
+      { "name": "Reggie Stallworth","role": "Operations",   "volume": 1690, "collaborators": 64, "recent": false },
+      { "name": "Caitlin Riley",    "role": "Closing",      "volume": 589,  "collaborators": 31, "recent": true  }
+    ]
+  },
+  {
+    "name": "Priya Venkat",
+    "brokerage": "Cascade Capital Lending",
+    "city": "Seattle",
+    "state": "WA",
+    "lat": 47.6062,
+    "lng": -122.3321,
+    "nmls": "1788390",
+    "lastTouch": "yesterday",
+    "ltmVolume": "$22.9M",
+    "volumeIdx": 2,
+    "team": [
+      { "name": "Sienna Park",   "role": "Sales",        "volume": 287,  "collaborators": 19, "recent": true  },
+      { "name": "Trent Patel",   "role": "Underwriting", "volume": 1289, "collaborators": 64, "recent": false },
+      { "name": "Aisha Brooks",  "role": "Welcome",      "volume": 904,  "collaborators": 47, "recent": true  },
+      { "name": "Mason Clarke",  "role": "Operations",   "volume": 1102, "collaborators": 53, "recent": false }
+    ]
+  },
+  {
+    "name": "Elena Vasquez",
+    "brokerage": "Desert Sun Financial",
+    "city": "Phoenix",
+    "state": "AZ",
+    "lat": 33.4484,
+    "lng": -112.074,
+    "nmls": "1521988",
+    "lastTouch": "4 days ago",
+    "ltmVolume": "$37.0M",
+    "volumeIdx": 3,
+    "team": [
+      { "name": "Owen Cabrera",  "role": "Sales",        "volume": 374,  "collaborators": 24, "recent": false },
+      { "name": "Priya Shah",    "role": "Underwriting", "volume": 1071, "collaborators": 52, "recent": true  },
+      { "name": "Madison Tran",  "role": "Welcome",      "volume": 683,  "collaborators": 36, "recent": false },
+      { "name": "Devon Reilly",  "role": "Operations",   "volume": 2210, "collaborators": 88, "recent": false },
+      { "name": "Sam Greco",     "role": "Closing",      "volume": 715,  "collaborators": 39, "recent": false }
+    ]
+  },
+  {
+    "name": "Tyrell Brooks",
+    "brokerage": "Peachtree Mortgage Co",
+    "city": "Atlanta",
+    "state": "GA",
+    "lat": 33.749,
+    "lng": -84.388,
+    "nmls": "1714250",
+    "lastTouch": "3 days ago",
+    "ltmVolume": "$54.8M",
+    "volumeIdx": 4,
+    "team": [
+      { "name": "Carlos Mendez",   "role": "Sales",        "volume": 538,  "collaborators": 28, "recent": false },
+      { "name": "Hannah Wilson",   "role": "Underwriting", "volume": 1456, "collaborators": 73, "recent": false },
+      { "name": "Jordan Pierce",   "role": "Welcome",      "volume": 511,  "collaborators": 29, "recent": true  },
+      { "name": "Nadia Ahmed",     "role": "Operations",   "volume": 1834, "collaborators": 71, "recent": true  },
+      { "name": "Bryce Watanabe",  "role": "Closing",      "volume": 421,  "collaborators": 22, "recent": false }
+    ]
+  },
+  {
+    "name": "Rachel Goldberg",
+    "brokerage": "Lakefront Lending",
+    "city": "Chicago",
+    "state": "IL",
+    "lat": 41.8781,
+    "lng": -87.6298,
+    "nmls": "1599803",
+    "lastTouch": "5 hours ago",
+    "ltmVolume": "$41.6M",
+    "volumeIdx": 4,
+    "team": [
+      { "name": "Sienna Park",     "role": "Sales",        "volume": 287,  "collaborators": 19, "recent": true  },
+      { "name": "Trent Patel",     "role": "Underwriting", "volume": 1289, "collaborators": 64, "recent": true  },
+      { "name": "Madison Tran",    "role": "Welcome",      "volume": 683,  "collaborators": 36, "recent": false },
+      { "name": "Reggie Stallworth","role": "Operations",  "volume": 1690, "collaborators": 64, "recent": false },
+      { "name": "Caitlin Riley",   "role": "Closing",      "volume": 589,  "collaborators": 31, "recent": false }
+    ]
+  },
+  {
+    "name": "Hector Morales",
+    "brokerage": "Rocky Mountain Home Loans",
+    "city": "Denver",
+    "state": "CO",
+    "lat": 39.7392,
+    "lng": -104.9903,
+    "nmls": "1820114",
+    "lastTouch": "11 days ago",
+    "ltmVolume": "$18.3M",
+    "volumeIdx": 2,
+    "team": [
+      { "name": "Owen Cabrera",  "role": "Sales",        "volume": 374,  "collaborators": 24, "recent": false },
+      { "name": "Hannah Wilson", "role": "Underwriting", "volume": 1456, "collaborators": 73, "recent": false },
+      { "name": "Aisha Brooks",  "role": "Welcome",      "volume": 904,  "collaborators": 47, "recent": false },
+      { "name": "Mason Clarke",  "role": "Operations",   "volume": 1102, "collaborators": 53, "recent": true  }
+    ]
+  }
+]
