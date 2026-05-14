@@ -123,24 +123,6 @@
     .team-bubble .role { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; }
     .team-bubble .stats { font-size: 9px; color: var(--muted); text-align: center; }
     .overlay-foot { text-align: center; font-size: 10px; color: var(--muted); padding-bottom: 4px; }
-    .shared-pill {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: rgba(87, 196, 229, 0.18);
-      border: 1px solid rgba(87, 196, 229, 0.45);
-      color: #b6e7f5;
-      font-size: 9px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-    }
-    .team-bubble.shared .circle {
-      box-shadow:
-        0 0 0 2px rgba(87, 196, 229, 0.55),
-        0 0 18px rgba(87, 196, 229, 0.30),
-        0 6px 20px rgba(0,0,0,0.35);
-    }
   </style>
 </head>
 <body>
@@ -173,85 +155,74 @@
       { name:"Marcus Chen", brokerage:"Summit Lending Group", city:"Detroit", state:"MI",
         lat:42.3314, lng:-83.0458, nmls:"1842301", lastTouch:"2 days ago", ltmVolume:"$48.2M", volumeIdx:4,
         team:[
-          {name:"Maria Lopez", role:"Sales", volume:412, collaborators:31, recent:true},
-          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:false},
-          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:false},
-          {name:"Devon Reilly", role:"Operations", volume:2210, collaborators:88, recent:true},
-          {name:"Sam Greco", role:"Closing", volume:715, collaborators:39, recent:false}
+          {name:"Maria Lopez",  role:"Sales",        volume:412,  collaborators:31, recent:true},
+          {name:"Trent Patel",  role:"Underwriting", volume:1289, collaborators:64, recent:false},
+          {name:"Aisha Brooks", role:"Welcome",      volume:904,  collaborators:47, recent:false},
+          {name:"Devon Reilly", role:"Operations",   volume:2210, collaborators:88, recent:true},
+          {name:"Sam Greco",    role:"Closing",      volume:715,  collaborators:39, recent:false}
         ]},
       { name:"Jasmine Robles", brokerage:"Coastline Mortgage Partners", city:"Miami", state:"FL",
         lat:25.7617, lng:-80.1918, nmls:"1903447", lastTouch:"today", ltmVolume:"$31.7M", volumeIdx:3,
         team:[
-          {name:"Carlos Mendez", role:"Sales", volume:538, collaborators:28, recent:true},
-          {name:"Priya Shah", role:"Underwriting", volume:1071, collaborators:52, recent:true},
-          {name:"Liam O'Connor", role:"Welcome", volume:612, collaborators:34, recent:false},
-          {name:"Nadia Ahmed", role:"Operations", volume:1834, collaborators:71, recent:false},
-          {name:"Bryce Watanabe", role:"Closing", volume:421, collaborators:22, recent:false}
+          {name:"Carlos Mendez",  role:"Sales",        volume:538,  collaborators:28, recent:true},
+          {name:"Priya Shah",     role:"Underwriting", volume:1071, collaborators:52, recent:true},
+          {name:"Liam O'Connor",  role:"Welcome",      volume:612,  collaborators:34, recent:false},
+          {name:"Nadia Ahmed",    role:"Operations",   volume:1834, collaborators:71, recent:false},
+          {name:"Bryce Watanabe", role:"Closing",      volume:421,  collaborators:22, recent:false}
         ]},
       { name:"Dale Hutchings", brokerage:"Lone Star Home Loans", city:"Dallas", state:"TX",
         lat:32.7767, lng:-96.797, nmls:"1655012", lastTouch:"8 days ago", ltmVolume:"$62.4M", volumeIdx:5,
         team:[
-          {name:"Maria Lopez", role:"Sales", volume:412, collaborators:31, recent:false},
-          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:true},
-          {name:"Jordan Pierce", role:"Welcome", volume:511, collaborators:29, recent:false},
-          {name:"Reggie Stallworth", role:"Operations", volume:1690, collaborators:64, recent:false},
-          {name:"Caitlin Riley", role:"Closing", volume:589, collaborators:31, recent:true}
+          {name:"Kayla Reeves",      role:"Sales",        volume:489,  collaborators:26, recent:false},
+          {name:"Hannah Wilson",     role:"Underwriting", volume:1456, collaborators:73, recent:true},
+          {name:"Jordan Pierce",     role:"Welcome",      volume:511,  collaborators:29, recent:false},
+          {name:"Reggie Stallworth", role:"Operations",   volume:1690, collaborators:64, recent:false},
+          {name:"Caitlin Riley",     role:"Closing",      volume:589,  collaborators:31, recent:true}
         ]},
       { name:"Priya Venkat", brokerage:"Cascade Capital Lending", city:"Seattle", state:"WA",
         lat:47.6062, lng:-122.3321, nmls:"1788390", lastTouch:"yesterday", ltmVolume:"$22.9M", volumeIdx:2,
         team:[
-          {name:"Sienna Park", role:"Sales", volume:287, collaborators:19, recent:true},
-          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:false},
-          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:true},
-          {name:"Mason Clarke", role:"Operations", volume:1102, collaborators:53, recent:false}
+          {name:"Sienna Park",  role:"Sales",        volume:287,  collaborators:19, recent:true},
+          {name:"Marcus Webb",  role:"Underwriting", volume:942,  collaborators:51, recent:false},
+          {name:"Tessa Yang",   role:"Welcome",      volume:718,  collaborators:38, recent:true},
+          {name:"Mason Clarke", role:"Operations",   volume:1102, collaborators:53, recent:false}
         ]},
       { name:"Elena Vasquez", brokerage:"Desert Sun Financial", city:"Phoenix", state:"AZ",
         lat:33.4484, lng:-112.074, nmls:"1521988", lastTouch:"4 days ago", ltmVolume:"$37.0M", volumeIdx:3,
         team:[
-          {name:"Owen Cabrera", role:"Sales", volume:374, collaborators:24, recent:false},
-          {name:"Priya Shah", role:"Underwriting", volume:1071, collaborators:52, recent:true},
-          {name:"Madison Tran", role:"Welcome", volume:683, collaborators:36, recent:false},
-          {name:"Devon Reilly", role:"Operations", volume:2210, collaborators:88, recent:false},
-          {name:"Sam Greco", role:"Closing", volume:715, collaborators:39, recent:false}
+          {name:"Owen Cabrera",  role:"Sales",        volume:374,  collaborators:24, recent:false},
+          {name:"Diego Ramirez", role:"Underwriting", volume:1188, collaborators:59, recent:true},
+          {name:"Madison Tran",  role:"Welcome",      volume:683,  collaborators:36, recent:false},
+          {name:"Quinn Hayes",   role:"Operations",   volume:1456, collaborators:67, recent:false},
+          {name:"Cole Beckett",  role:"Closing",      volume:502,  collaborators:28, recent:false}
         ]},
       { name:"Tyrell Brooks", brokerage:"Peachtree Mortgage Co", city:"Atlanta", state:"GA",
         lat:33.749, lng:-84.388, nmls:"1714250", lastTouch:"3 days ago", ltmVolume:"$54.8M", volumeIdx:4,
         team:[
-          {name:"Carlos Mendez", role:"Sales", volume:538, collaborators:28, recent:false},
-          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:false},
-          {name:"Jordan Pierce", role:"Welcome", volume:511, collaborators:29, recent:true},
-          {name:"Nadia Ahmed", role:"Operations", volume:1834, collaborators:71, recent:true},
-          {name:"Bryce Watanabe", role:"Closing", volume:421, collaborators:22, recent:false}
+          {name:"Reggie Vaughn", role:"Sales",        volume:461,  collaborators:27, recent:false},
+          {name:"Priya Iyer",    role:"Underwriting", volume:1322, collaborators:68, recent:false},
+          {name:"Naomi Webb",    role:"Welcome",      volume:597,  collaborators:33, recent:true},
+          {name:"Andre Bishop",  role:"Operations",   volume:1742, collaborators:72, recent:true},
+          {name:"Lila Hartman",  role:"Closing",      volume:388,  collaborators:21, recent:false}
         ]},
       { name:"Rachel Goldberg", brokerage:"Lakefront Lending", city:"Chicago", state:"IL",
         lat:41.8781, lng:-87.6298, nmls:"1599803", lastTouch:"5 hours ago", ltmVolume:"$41.6M", volumeIdx:4,
         team:[
-          {name:"Sienna Park", role:"Sales", volume:287, collaborators:19, recent:true},
-          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:true},
-          {name:"Madison Tran", role:"Welcome", volume:683, collaborators:36, recent:false},
-          {name:"Reggie Stallworth", role:"Operations", volume:1690, collaborators:64, recent:false},
-          {name:"Caitlin Riley", role:"Closing", volume:589, collaborators:31, recent:false}
+          {name:"Brett Coleman",  role:"Sales",        volume:312,  collaborators:22, recent:true},
+          {name:"Hiro Tanaka",    role:"Underwriting", volume:1098, collaborators:56, recent:true},
+          {name:"Brianna Doyle",  role:"Welcome",      volume:642,  collaborators:34, recent:false},
+          {name:"Marcus Quinn",   role:"Operations",   volume:1581, collaborators:61, recent:false},
+          {name:"Jada Williams",  role:"Closing",      volume:478,  collaborators:26, recent:false}
         ]},
       { name:"Hector Morales", brokerage:"Rocky Mountain Home Loans", city:"Denver", state:"CO",
         lat:39.7392, lng:-104.9903, nmls:"1820114", lastTouch:"11 days ago", ltmVolume:"$18.3M", volumeIdx:2,
         team:[
-          {name:"Owen Cabrera", role:"Sales", volume:374, collaborators:24, recent:false},
-          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:false},
-          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:false},
-          {name:"Mason Clarke", role:"Operations", volume:1102, collaborators:53, recent:true}
+          {name:"Jett Holloway", role:"Sales",        volume:358,  collaborators:23, recent:false},
+          {name:"Esme Park",     role:"Underwriting", volume:1234, collaborators:62, recent:false},
+          {name:"Ravi Kapoor",   role:"Welcome",      volume:781,  collaborators:41, recent:false},
+          {name:"Sofia Bennett", role:"Operations",   volume:1389, collaborators:57, recent:true}
         ]}
     ];
-
-    const SHARED_MAP = (() => {
-      const m = new Map();
-      BROKERS.forEach(b => {
-        b.team.forEach(t => {
-          if (!m.has(t.name)) m.set(t.name, new Set());
-          m.get(t.name).add(b.name);
-        });
-      });
-      return m;
-    })();
 
     const DEPT_COLORS = {
       Sales:        getCss('--dept-sales'),
@@ -344,11 +315,8 @@
         const y = cy + Math.sin(angle) * radius;
         const sizePx = 46 + Math.min(40, Math.round(t.volume / 60));
         const color = DEPT_COLORS[t.role] || '#888';
-        const sharedTotal = SHARED_MAP.get(t.name)?.size || 1;
-        const sharedDelta = sharedTotal - 1;
-        const isShared = sharedDelta > 0;
         const bubble = document.createElement('div');
-        bubble.className = 'team-bubble' + (isShared ? ' shared' : '');
+        bubble.className = 'team-bubble';
         bubble.style.left = x + 'px';
         bubble.style.top = y + 'px';
         bubble.style.animationDelay = (i * 70) + 'ms';
@@ -360,7 +328,6 @@
           <div class="name">${t.name}</div>
           <div class="role">${t.role}</div>
           <div class="stats">${t.volume} clients · ${t.collaborators} teammates</div>
-          ${isShared ? `<div class="shared-pill">+ ${sharedDelta} broker${sharedDelta > 1 ? 's' : ''}</div>` : ''}
         `;
         stage.appendChild(bubble);
       });
