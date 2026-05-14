@@ -123,6 +123,24 @@
     .team-bubble .role { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; }
     .team-bubble .stats { font-size: 9px; color: var(--muted); text-align: center; }
     .overlay-foot { text-align: center; font-size: 10px; color: var(--muted); padding-bottom: 4px; }
+    .shared-pill {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(87, 196, 229, 0.18);
+      border: 1px solid rgba(87, 196, 229, 0.45);
+      color: #b6e7f5;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+    }
+    .team-bubble.shared .circle {
+      box-shadow:
+        0 0 0 2px rgba(87, 196, 229, 0.55),
+        0 0 18px rgba(87, 196, 229, 0.30),
+        0 6px 20px rgba(0,0,0,0.35);
+    }
   </style>
 </head>
 <body>
@@ -224,6 +242,17 @@
         ]}
     ];
 
+    const SHARED_MAP = (() => {
+      const m = new Map();
+      BROKERS.forEach(b => {
+        b.team.forEach(t => {
+          if (!m.has(t.name)) m.set(t.name, new Set());
+          m.get(t.name).add(b.name);
+        });
+      });
+      return m;
+    })();
+
     const DEPT_COLORS = {
       Sales:        getCss('--dept-sales'),
       Underwriting: getCss('--dept-underwriting'),
@@ -315,8 +344,11 @@
         const y = cy + Math.sin(angle) * radius;
         const sizePx = 46 + Math.min(40, Math.round(t.volume / 60));
         const color = DEPT_COLORS[t.role] || '#888';
+        const sharedTotal = SHARED_MAP.get(t.name)?.size || 1;
+        const sharedDelta = sharedTotal - 1;
+        const isShared = sharedDelta > 0;
         const bubble = document.createElement('div');
-        bubble.className = 'team-bubble';
+        bubble.className = 'team-bubble' + (isShared ? ' shared' : '');
         bubble.style.left = x + 'px';
         bubble.style.top = y + 'px';
         bubble.style.animationDelay = (i * 70) + 'ms';
@@ -328,6 +360,7 @@
           <div class="name">${t.name}</div>
           <div class="role">${t.role}</div>
           <div class="stats">${t.volume} clients · ${t.collaborators} teammates</div>
+          ${isShared ? `<div class="shared-pill">+ ${sharedDelta} broker${sharedDelta > 1 ? 's' : ''}</div>` : ''}
         `;
         stage.appendChild(bubble);
       });
