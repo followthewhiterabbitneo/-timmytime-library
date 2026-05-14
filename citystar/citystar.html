@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>City Star &middot; UWM</title>
+  <style>
+    :root {
+      --uwm-navy:        #0a1a36;
+      --uwm-navy-deep:   #050d1d;
+      --uwm-blue:        #1f4ea3;
+      --uwm-orange:      #f56600;
+      --uwm-amber:       #ffb142;
+      --text:            #f4f6fb;
+      --muted:           rgba(244,246,251,0.6);
+      --dept-sales:        #f56600;
+      --dept-underwriting: #1f4ea3;
+      --dept-welcome:      #ffb142;
+      --dept-operations:   #57c4e5;
+      --dept-closing:      #b86bff;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      margin: 0; height: 100%;
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(31,78,163,0.20) 0%, transparent 55%),
+        radial-gradient(ellipse at center, var(--uwm-navy) 0%, var(--uwm-navy-deep) 80%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .stage { position: fixed; inset: 0; }
+    #map { width: 100%; height: 100%; touch-action: manipulation; display: block; }
+    .state { fill: rgba(255,255,255,0.02); stroke: rgba(255,255,255,0.07); stroke-width: 0.5; }
+    .city-dot {
+      fill: var(--uwm-amber); cursor: pointer;
+      filter: drop-shadow(0 0 6px rgba(255,177,66,0.95));
+      transition: r 200ms ease, filter 200ms ease;
+    }
+    .city-dot:hover, .city-dot:active { filter: drop-shadow(0 0 16px var(--uwm-orange)); }
+    .city-glow { fill: var(--uwm-amber); opacity: 0.14; pointer-events: none; }
+    .city-pulse {
+      fill: none; stroke: var(--uwm-amber); stroke-width: 1; opacity: 0.55;
+      animation: ring 3.6s ease-out infinite; pointer-events: none;
+    }
+    @keyframes ring { 0% { r: 4; opacity: 0.55; } 100% { r: 28; opacity: 0; } }
+    .topbar {
+      position: fixed; top: env(safe-area-inset-top, 12px); left: 0; right: 0;
+      padding: 14px 18px; display: flex; justify-content: space-between; align-items: center;
+      pointer-events: none; z-index: 10;
+    }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: 1.5px; font-size: 13px; }
+    .brand .logo { color: var(--uwm-orange); font-size: 18px; }
+    .beta {
+      font-size: 10px; padding: 3px 7px; border-radius: 6px;
+      background: rgba(245,102,0,0.18); color: var(--uwm-orange); letter-spacing: 1px;
+    }
+    .legend { font-size: 11px; color: var(--muted); }
+    .hint {
+      position: fixed; bottom: calc(env(safe-area-inset-bottom, 16px) + 8px);
+      left: 0; right: 0; text-align: center; font-size: 11px; color: var(--muted);
+      letter-spacing: 0.4px; pointer-events: none;
+    }
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(5,13,29,0.78);
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      display: none; flex-direction: column;
+      padding: calc(env(safe-area-inset-top, 16px) + 12px) 16px 24px;
+      z-index: 20; opacity: 0; transition: opacity 220ms ease;
+    }
+    .overlay.open { display: flex; opacity: 1; }
+    .close {
+      position: absolute; top: calc(env(safe-area-inset-top, 16px) + 10px); right: 14px;
+      background: rgba(255,255,255,0.10); border: none; color: var(--text);
+      width: 34px; height: 34px; border-radius: 50%; font-size: 22px; cursor: pointer;
+      line-height: 1; z-index: 25;
+    }
+    .broker-card {
+      background: linear-gradient(150deg, rgba(31,78,163,0.32), rgba(245,102,0,0.10));
+      border: 1px solid rgba(245,102,0,0.22); border-radius: 20px;
+      padding: 16px; display: flex; gap: 14px; align-items: center;
+      margin-right: 44px;
+    }
+    .broker-card .avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--uwm-orange), var(--uwm-amber));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 22px; color: var(--uwm-navy-deep);
+      flex-shrink: 0; box-shadow: 0 0 22px rgba(255,177,66,0.45);
+    }
+    .broker-card .who h2 { margin: 0 0 4px; font-size: 19px; font-weight: 700; }
+    .broker-card .who .sub { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+    .meta-row { display: flex; gap: 6px; font-size: 10px; color: var(--muted); flex-wrap: wrap; }
+    .meta-row .pill {
+      background: rgba(255,255,255,0.07); padding: 4px 8px; border-radius: 999px; white-space: nowrap;
+    }
+    .meta-row .pill strong { color: var(--text); font-weight: 600; }
+    .team-stage { flex: 1; position: relative; margin-top: 18px; min-height: 380px; }
+    .team-bubble {
+      position: absolute; transform: translate(-50%, -50%) scale(0.6); opacity: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      animation: pop 480ms cubic-bezier(0.2, 0.9, 0.3, 1.25) forwards; pointer-events: none;
+    }
+    @keyframes pop { to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+    .team-bubble .circle {
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 700; color: #fff; border: 2px solid rgba(255,255,255,0.10);
+      position: relative; box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    }
+    .team-bubble .circle.recent::after {
+      content: ''; position: absolute; inset: -7px; border-radius: 50%;
+      border: 2px solid var(--uwm-amber); animation: pulse 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50%      { transform: scale(1.14); opacity: 0.15; }
+    }
+    .team-bubble .name { font-size: 12px; font-weight: 600; text-align: center; margin-top: 4px; }
+    .team-bubble .role { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.7px; }
+    .team-bubble .stats { font-size: 9px; color: var(--muted); text-align: center; }
+    .overlay-foot { text-align: center; font-size: 10px; color: var(--muted); padding-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <div class="stage"><svg id="map"></svg></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">&#9733;</span>
+      <span>CITY STAR</span>
+      <span class="beta">UWM</span>
+    </div>
+    <div class="legend" id="legend">tap a light</div>
+  </header>
+
+  <footer class="hint">175M numbers &middot; in-house model &middot; nothing leaves the network</footer>
+
+  <section class="overlay" id="overlay" aria-hidden="true">
+    <button class="close" id="close" aria-label="close">&times;</button>
+    <div class="broker-card" id="broker-card"></div>
+    <div class="team-stage" id="team-stage"></div>
+    <div class="overlay-foot">Tap empty space to dismiss</div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script>
+    const US_TOPO = 'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json';
+
+    const BROKERS = [
+      { name:"Marcus Chen", brokerage:"Summit Lending Group", city:"Detroit", state:"MI",
+        lat:42.3314, lng:-83.0458, nmls:"1842301", lastTouch:"2 days ago", ltmVolume:"$48.2M", volumeIdx:4,
+        team:[
+          {name:"Maria Lopez", role:"Sales", volume:412, collaborators:31, recent:true},
+          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:false},
+          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:false},
+          {name:"Devon Reilly", role:"Operations", volume:2210, collaborators:88, recent:true},
+          {name:"Sam Greco", role:"Closing", volume:715, collaborators:39, recent:false}
+        ]},
+      { name:"Jasmine Robles", brokerage:"Coastline Mortgage Partners", city:"Miami", state:"FL",
+        lat:25.7617, lng:-80.1918, nmls:"1903447", lastTouch:"today", ltmVolume:"$31.7M", volumeIdx:3,
+        team:[
+          {name:"Carlos Mendez", role:"Sales", volume:538, collaborators:28, recent:true},
+          {name:"Priya Shah", role:"Underwriting", volume:1071, collaborators:52, recent:true},
+          {name:"Liam O'Connor", role:"Welcome", volume:612, collaborators:34, recent:false},
+          {name:"Nadia Ahmed", role:"Operations", volume:1834, collaborators:71, recent:false},
+          {name:"Bryce Watanabe", role:"Closing", volume:421, collaborators:22, recent:false}
+        ]},
+      { name:"Dale Hutchings", brokerage:"Lone Star Home Loans", city:"Dallas", state:"TX",
+        lat:32.7767, lng:-96.797, nmls:"1655012", lastTouch:"8 days ago", ltmVolume:"$62.4M", volumeIdx:5,
+        team:[
+          {name:"Maria Lopez", role:"Sales", volume:412, collaborators:31, recent:false},
+          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:true},
+          {name:"Jordan Pierce", role:"Welcome", volume:511, collaborators:29, recent:false},
+          {name:"Reggie Stallworth", role:"Operations", volume:1690, collaborators:64, recent:false},
+          {name:"Caitlin Riley", role:"Closing", volume:589, collaborators:31, recent:true}
+        ]},
+      { name:"Priya Venkat", brokerage:"Cascade Capital Lending", city:"Seattle", state:"WA",
+        lat:47.6062, lng:-122.3321, nmls:"1788390", lastTouch:"yesterday", ltmVolume:"$22.9M", volumeIdx:2,
+        team:[
+          {name:"Sienna Park", role:"Sales", volume:287, collaborators:19, recent:true},
+          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:false},
+          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:true},
+          {name:"Mason Clarke", role:"Operations", volume:1102, collaborators:53, recent:false}
+        ]},
+      { name:"Elena Vasquez", brokerage:"Desert Sun Financial", city:"Phoenix", state:"AZ",
+        lat:33.4484, lng:-112.074, nmls:"1521988", lastTouch:"4 days ago", ltmVolume:"$37.0M", volumeIdx:3,
+        team:[
+          {name:"Owen Cabrera", role:"Sales", volume:374, collaborators:24, recent:false},
+          {name:"Priya Shah", role:"Underwriting", volume:1071, collaborators:52, recent:true},
+          {name:"Madison Tran", role:"Welcome", volume:683, collaborators:36, recent:false},
+          {name:"Devon Reilly", role:"Operations", volume:2210, collaborators:88, recent:false},
+          {name:"Sam Greco", role:"Closing", volume:715, collaborators:39, recent:false}
+        ]},
+      { name:"Tyrell Brooks", brokerage:"Peachtree Mortgage Co", city:"Atlanta", state:"GA",
+        lat:33.749, lng:-84.388, nmls:"1714250", lastTouch:"3 days ago", ltmVolume:"$54.8M", volumeIdx:4,
+        team:[
+          {name:"Carlos Mendez", role:"Sales", volume:538, collaborators:28, recent:false},
+          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:false},
+          {name:"Jordan Pierce", role:"Welcome", volume:511, collaborators:29, recent:true},
+          {name:"Nadia Ahmed", role:"Operations", volume:1834, collaborators:71, recent:true},
+          {name:"Bryce Watanabe", role:"Closing", volume:421, collaborators:22, recent:false}
+        ]},
+      { name:"Rachel Goldberg", brokerage:"Lakefront Lending", city:"Chicago", state:"IL",
+        lat:41.8781, lng:-87.6298, nmls:"1599803", lastTouch:"5 hours ago", ltmVolume:"$41.6M", volumeIdx:4,
+        team:[
+          {name:"Sienna Park", role:"Sales", volume:287, collaborators:19, recent:true},
+          {name:"Trent Patel", role:"Underwriting", volume:1289, collaborators:64, recent:true},
+          {name:"Madison Tran", role:"Welcome", volume:683, collaborators:36, recent:false},
+          {name:"Reggie Stallworth", role:"Operations", volume:1690, collaborators:64, recent:false},
+          {name:"Caitlin Riley", role:"Closing", volume:589, collaborators:31, recent:false}
+        ]},
+      { name:"Hector Morales", brokerage:"Rocky Mountain Home Loans", city:"Denver", state:"CO",
+        lat:39.7392, lng:-104.9903, nmls:"1820114", lastTouch:"11 days ago", ltmVolume:"$18.3M", volumeIdx:2,
+        team:[
+          {name:"Owen Cabrera", role:"Sales", volume:374, collaborators:24, recent:false},
+          {name:"Hannah Wilson", role:"Underwriting", volume:1456, collaborators:73, recent:false},
+          {name:"Aisha Brooks", role:"Welcome", volume:904, collaborators:47, recent:false},
+          {name:"Mason Clarke", role:"Operations", volume:1102, collaborators:53, recent:true}
+        ]}
+    ];
+
+    const DEPT_COLORS = {
+      Sales:        getCss('--dept-sales'),
+      Underwriting: getCss('--dept-underwriting'),
+      Welcome:      getCss('--dept-welcome'),
+      Operations:   getCss('--dept-operations'),
+      Closing:      getCss('--dept-closing'),
+    };
+
+    function getCss(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+    function initials(name) {
+      return name.split(' ').map(p => p[0]).join('').slice(0,2).toUpperCase();
+    }
+
+    async function boot() {
+      const topo = await fetch(US_TOPO).then(r => r.json());
+      renderMap(topo, BROKERS);
+      document.getElementById('legend').textContent =
+        `${BROKERS.length} brokers lit · tap a light`;
+    }
+
+    function renderMap(topo, brokers) {
+      const svg = d3.select('#map');
+      const { width, height } = svg.node().getBoundingClientRect();
+      const land = topojson.feature(topo, topo.objects.states);
+      const projection = d3.geoAlbersUsa().fitSize([width, height], land);
+      const path = d3.geoPath(projection);
+
+      svg.selectAll('*').remove();
+
+      svg.append('g')
+        .selectAll('path')
+        .data(land.features)
+        .join('path')
+        .attr('class', 'state')
+        .attr('d', path);
+
+      const dots = svg.append('g');
+
+      brokers.forEach((b, i) => {
+        const xy = projection([b.lng, b.lat]);
+        if (!xy) return;
+        const [x, y] = xy;
+        const r = 3 + b.volumeIdx * 1.2;
+
+        dots.append('circle').attr('class','city-glow').attr('cx',x).attr('cy',y).attr('r',14 + b.volumeIdx*3);
+        const pulse = dots.append('circle').attr('class','city-pulse').attr('cx',x).attr('cy',y).attr('r',4);
+        pulse.node().style.animationDelay = (i * 320) + 'ms';
+        dots.append('circle')
+          .attr('class','city-dot')
+          .attr('cx',x).attr('cy',y).attr('r',r)
+          .on('click', () => openBroker(b))
+          .on('touchstart', () => openBroker(b));
+      });
+    }
+
+    function openBroker(b) {
+      const overlay = document.getElementById('overlay');
+      const card = document.getElementById('broker-card');
+      card.innerHTML = `
+        <div class="avatar">${initials(b.name)}</div>
+        <div class="who">
+          <h2>${b.name}</h2>
+          <div class="sub">${b.brokerage} · ${b.city}, ${b.state}</div>
+          <div class="meta-row">
+            <span class="pill">NMLS <strong>${b.nmls}</strong></span>
+            <span class="pill">Last touch <strong>${b.lastTouch}</strong></span>
+            <span class="pill">LTM funded <strong>${b.ltmVolume}</strong></span>
+          </div>
+        </div>
+      `;
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden','false');
+      requestAnimationFrame(() => fanOutTeam(b.team));
+    }
+
+    function fanOutTeam(team) {
+      const stage = document.getElementById('team-stage');
+      stage.innerHTML = '';
+      const rect = stage.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const radius = Math.min(rect.width, rect.height) * 0.36;
+
+      team.forEach((t, i) => {
+        const angle = (i / team.length) * Math.PI * 2 - Math.PI/2;
+        const x = cx + Math.cos(angle) * radius;
+        const y = cy + Math.sin(angle) * radius;
+        const sizePx = 46 + Math.min(40, Math.round(t.volume / 60));
+        const color = DEPT_COLORS[t.role] || '#888';
+        const bubble = document.createElement('div');
+        bubble.className = 'team-bubble';
+        bubble.style.left = x + 'px';
+        bubble.style.top = y + 'px';
+        bubble.style.animationDelay = (i * 70) + 'ms';
+        bubble.innerHTML = `
+          <div class="circle ${t.recent ? 'recent' : ''}"
+               style="background:${color}; width:${sizePx}px; height:${sizePx}px; font-size:${Math.max(13, sizePx*0.32)}px;">
+            ${initials(t.name)}
+          </div>
+          <div class="name">${t.name}</div>
+          <div class="role">${t.role}</div>
+          <div class="stats">${t.volume} clients · ${t.collaborators} teammates</div>
+        `;
+        stage.appendChild(bubble);
+      });
+    }
+
+    function closeOverlay() {
+      const overlay = document.getElementById('overlay');
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden','true');
+    }
+
+    document.getElementById('close').addEventListener('click', closeOverlay);
+    document.getElementById('overlay').addEventListener('click', (e) => {
+      if (e.target.id === 'overlay') closeOverlay();
+    });
+    window.addEventListener('resize', boot);
+    boot().catch(err => {
+      console.error(err);
+      document.getElementById('legend').textContent = 'failed to load';
+    });
+  </script>
+</body>
+</html>
