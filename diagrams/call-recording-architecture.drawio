@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" agent="claude" version="24.0.0">
+  <diagram id="call-rec-arch" name="Call Recording Architecture">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Call Recording Architecture — CUCM BIB/SIPREC → F5 → OrecX (RHEL 9) → Qumulo NFS" style="text;html=1;fontSize=18;fontStyle=1;align=center;" vertex="1" parent="1">
+          <mxGeometry x="160" y="20" width="860" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Cisco Voice Platform container -->
+        <mxCell id="voicegrp" value="Cisco Voice Platform" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#1BA0D7;verticalAlign=top;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="520" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="phones" value="Cisco IP Phones&#10;Built-In Bridge (BIB) enabled&#10;VLAN 110 — 10.10.11.0/24" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1BA0D7;strokeColor=#0F6E96;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="90" y="130" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cucm" value="Cisco Unified CM (CUCM)&#10;Recording SIP Trunk (TLS/SRTP)&#10;10.10.10.10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1BA0D7;strokeColor=#0F6E96;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="130" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="BIB media fork (SRTP)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;" edge="1" parent="1" source="phones" target="cucm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- CTI Application -->
+        <mxCell id="cti" value="CTI Application&#10;JTAPI / CTI Manager over TLS&#10;10.10.12.20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E7D32;strokeColor=#1B5E20;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="680" y="100" width="210" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" value="JTAPI (TLS) tcp/2748-2749" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;dashed=1;" edge="1" parent="1" source="cti" target="cucm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- F5 -->
+        <mxCell id="f5" value="F5 BIG-IP LTM&#10;VIP 10.10.20.5:5061 (SIPREC)&#10;TLS termination / re-encrypt" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E21D38;strokeColor=#9E1427;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="350" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" value="SIPREC — SIP/TLS tcp/5061&#10;SRS metadata + forked RTP" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;fontStyle=1;" edge="1" parent="1" source="cucm" target="f5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- OrecX recorders container -->
+        <mxCell id="recgrp" value="Call Recording — OrecX (RHEL 9)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#EE0000;verticalAlign=top;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="490" width="500" height="160" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orecx1" value="OrecX Oreka Recorder 1&#10;RHEL 9 — 10.10.21.11" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EE0000;strokeColor=#A30000;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="230" y="540" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orecx2" value="OrecX Oreka Recorder 2&#10;RHEL 9 — 10.10.21.12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EE0000;strokeColor=#A30000;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="470" y="540" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e4" value="Pool member (TLS)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;" edge="1" parent="1" source="f5" target="orecx1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Pool member (TLS)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;" edge="1" parent="1" source="f5" target="orecx2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Qumulo -->
+        <mxCell id="qumulo" value="Qumulo Cluster&#10;NFS v3/v4.1 export: /recordings&#10;10.10.30.0/24 (storage VLAN)" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#5C2D91;strokeColor=#3B1D5E;fontColor=#ffffff;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="350" y="700" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e6" value="NFS tcp/2049" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;" edge="1" parent="1" source="orecx1" target="qumulo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="NFS tcp/2049" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;" edge="1" parent="1" source="orecx2" target="qumulo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
